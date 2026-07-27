@@ -1,0 +1,58 @@
+import os
+import sys
+
+User = "Test"
+Passwd= 333
+while True:
+    ask1=input("User: ")
+    if ask1==User:
+        while True:
+            try:
+                ask2=int(input("Password: "))
+                if ask2==Passwd:
+                    break
+                else:
+                    print("şifre eşleşmedi")
+            except:
+                print("şifre eşleşmedi")
+                continue
+        break
+    else:
+        print(f"kullanıcı bulunamadı: {ask1}")
+
+def cmd_echo(args):
+    print(" ".join(args))
+
+def benkimim(args):
+    print(User)
+def sudoopsec(args):
+    print("Mr. Robot sudo opsec haha")
+def helpme(args):
+    print("'say' kendisinden sonra yazılan yazıyı tekrarlar")
+    print("'exit' terminalden çıkmak için, Ctrl + C'de basabilirsiniz")
+    print("'whoami' mevcut oturumdaki kullanıcıyı söyler")
+    print("'opsec' üst seviye güvenlik açar")
+SOZLUK = {
+    "say": cmd_echo,
+    "whoami": benkimim,
+    "opsec": sudoopsec,
+    "help": helpme,
+}
+print("Yardım için 'help'")
+while True:
+    UserInput = input(">>$ ")
+
+    if UserInput == "exit":
+        break
+
+    parts = UserInput.split()
+    if not parts:
+        continue
+
+    cmd = parts[0]
+    args = parts[1:]
+
+    if cmd in SOZLUK:
+        SOZLUK[cmd](args)
+    else:
+        print(f"komut bulunamadı: {cmd}")
