@@ -34,6 +34,7 @@ def helpme(args):
     print("'whoami' mevcut oturumdaki kullanıcıyı söyler")
     print("'opsec' üst seviye güvenlik açar")
     print("'lks' fastfetch")
+    print("'update' LKShell'i günceller (Yeniden başlatmanız gerekir!)")
 
 def fetch(args):
     fastfetch(args)

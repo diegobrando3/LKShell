@@ -7,6 +7,11 @@ def update(args):
         print("Projeyi 'git clone' ile indirdiğinden emin ol.")
         return
 
+    status = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
+    if status.stdout.strip():
+        print("Uyarı: kaydedilmemiş değişikliklerin var, güncelleme öncesi commit veya stash yapman önerilir.")
+        return
+
     print("Güncellemeler kontrol ediliyor...")
     try:
         result = subprocess.run(
