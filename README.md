@@ -74,7 +74,7 @@ Tüm komut fonksiyonları `(args)` parametresi almalı (kullanmasa bile), çünk
 ## Gereksinimler
 
 ```bash
-pip install psutil
+pip install psutil --break-system-packages
 git
 ```
 
