@@ -1,6 +1,9 @@
 import os
 import sys
+from fastfetch import fastfetch
+from update import update
 
+print("Lütfen LKShell'i tam ekranda kullanın!")
 User = "Test"
 Passwd= 333
 while True:
@@ -19,10 +22,8 @@ while True:
         break
     else:
         print(f"kullanıcı bulunamadı: {ask1}")
-
 def cmd_echo(args):
     print(" ".join(args))
-
 def benkimim(args):
     print(User)
 def sudoopsec(args):
@@ -32,13 +33,24 @@ def helpme(args):
     print("'exit' terminalden çıkmak için, Ctrl + C'de basabilirsiniz")
     print("'whoami' mevcut oturumdaki kullanıcıyı söyler")
     print("'opsec' üst seviye güvenlik açar")
+    print("'lks' fastfetch")
+
+def fetch(args):
+    fastfetch(args)
+
+#neofetch ekle
 SOZLUK = {
     "say": cmd_echo,
     "whoami": benkimim,
+    "lks": fetch,
     "opsec": sudoopsec,
     "help": helpme,
+    "update": update,
 }
 print("Yardım için 'help'")
+
+
+
 while True:
     UserInput = input(">>$ ")
 
