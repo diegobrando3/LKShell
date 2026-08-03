@@ -10,6 +10,8 @@ Kendi Python tabanlı, bash'ten ilham alan basit bir terminal/shell projesi. Ken
   - `say <metin>` — yazdığın metni ekrana geri basar
   - `whoami` — mevcut oturumdaki kullanıcıyı gösterir
   - `opsec` — gizli komut :)
+  - `fastfetch` — sistem bilgisini (OS, CPU, GPU, RAM, disk, uptime, ekran) logoyla birlikte gösterir
+  - `update` — `git pull` ile projeyi GitHub'daki son sürüme günceller
   - `help` — kullanılabilir komutları listeler
   - `exit` — terminalden çıkış
 
@@ -28,12 +30,31 @@ merhaba dünya
 >>$ whoami
 Test
 
->>$ help
-'say' kendisinden sonra yazılan yazıyı tekrarlar
-'exit' terminalden çıkmak için, Ctrl + C'de basabilirsiniz
-'whoami' mevcut oturumdaki kullanıcıyı söyler
-'opsec' üst seviye güvenlik açar
+>>$ fastfetch
+ _      _  __ ____  _        OS:        Linux 6.x
+| |    | |/ /|  _ \| |       Shell:     LKShell v0.1
+| |    | ' / | |_) | |__     Uptime:    0:42:10
+| |    |  <  |  __/| '_ \    CPU:       ...
+| |____| . \ | |   | | | |   GPU:       ...
+|______|_|\_\|_|   |_| |_|   Memory:    ...
+Örnektir! ASCII art böyle değil.
+
+>>$ update
+Güncellemeler kontrol ediliyor...
+Already up to date.
 ```
+
+## Güncelleme
+
+Projeyi bir kez `git clone` ile indirdikten sonra, yeni sürümleri almak için shell içinden:
+
+```
+>>$ update
+```
+
+yazman yeterli. Kaydedilmemiş yerel değişikliklerin varsa `update` seni uyarır ve işlemi durdurur — önce commit veya stash yapman gerekir. Güncelleme sonrası değişikliklerin etkili olması için shell'i yeniden başlatman gerekir (`python3 sub.py`).
+
+> Not: `update` komutu yalnızca `git clone` ile indirilen kopyalarda çalışır. Projeyi zip olarak indirdiysen bu komut çalışmaz.
 
 ## Yeni komut ekleme
 
@@ -48,12 +69,20 @@ SOZLUK["selam"] = selam
 
 Tüm komut fonksiyonları `(args)` parametresi almalı (kullanmasa bile), çünkü hepsi aynı satırdan (`SOZLUK[cmd](args)`) çağrılıyor.
 
+## Gereksinimler
+
+```bash
+pip install psutil
+git
+```
+
 ## Yol haritası
 
 - [ ] `cd`, `pwd`, `ls` gibi temel dosya sistemi komutları
 - [ ] Tanınmayan komutları gerçek sistem shell'ine yönlendirme
 - [ ] Komut geçmişi (`history`)
 - [ ] Daha güvenli giriş akışı (şifre gizleme)
+- [ ] `fastfetch` çıktısında renk (ANSI) desteği
 
 ## Neden?
 
