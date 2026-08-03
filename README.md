@@ -18,6 +18,8 @@ Kendi Python tabanlı, bash'ten ilham alan basit bir terminal/shell projesi. Ken
 ## Kullanım
 
 ```bash
+git clone https://github.com/diegobrando3/LKShell.git
+~/LKShell
 python3 sub.py
 ```
 
