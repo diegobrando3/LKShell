@@ -5,7 +5,7 @@ from datetime import timedelta
 import psutil
 import socket
 
-SHELL_VERSION = "LKShell v0.1"  # elle güncelle
+SHELL_VERSION = "LKShell v0.2"  # elle güncelle
 
 def get_kernel():
     return platform.release()  # zaten OS satırında var ama ayrı satır istersen bu
