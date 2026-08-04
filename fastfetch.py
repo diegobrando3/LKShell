@@ -2,11 +2,59 @@ import os
 import platform
 import subprocess
 from datetime import timedelta
-
 import psutil
+import socket
 
 SHELL_VERSION = "LKShell v0.1"  # elle güncelle
 
+def get_kernel():
+    return platform.release()  # zaten OS satırında var ama ayrı satır istersen bu
+
+
+def get_hostname():
+    return socket.gethostname()
+
+
+def get_username():
+    return os.getenv("USER") or os.getenv("LOGNAME") or "Bilinmiyor"
+
+
+def get_packages():
+    system = platform.system()
+    if system == "Linux":
+        try:
+            out = subprocess.check_output(["dpkg", "--get-selections"], text=True)
+            count = len(out.strip().splitlines())
+            return f"{count} (dpkg)"
+        except Exception:
+            pass
+    return "Bilinmiyor"
+
+
+def get_terminal():
+    return os.getenv("TERM") or "Bilinmiyor"
+
+
+def get_local_ip():
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except Exception:
+        return "Bilinmiyor"
+
+
+def get_battery():
+    try:
+        battery = psutil.sensors_battery()
+        if battery:
+            status = "şarj oluyor" if battery.power_plugged else "şarjda değil"
+            return f"%{battery.percent} ({status})"
+    except Exception:
+        pass
+    return None  # laptop değilse veya bilgi yoksa gösterme
 
 def get_uptime():
     boot = psutil.boot_time()
@@ -190,20 +238,33 @@ LOGO = r"""
                                  @:      .            .      ..               :@                    
                                  %.  .        .  .  .                 .        -@                                                     
 """
+
 def fastfetch(args):
+    display = get_display()
+    battery = get_battery()
+
     info_lines = [
         f"OS:        {platform.system()} {platform.release()}",
+        f"Kernel:    {get_kernel()}",
+        f"Hostname:  {get_hostname()}",
+        f"Kullanıcı: {get_username()}",
         f"Shell:     {SHELL_VERSION}",
+        f"Terminal:  {get_terminal()}",
         f"Uptime:    {get_uptime()}",
+        f"Paketler:  {get_packages()}",
         f"CPU:       {get_cpu()}",
         f"GPU:       {get_gpu()}",
         f"Memory:    {get_memory()}",
         f"Disk (/):  {get_disk()}",
+        f"IP:        {get_local_ip()}",
     ]
+    if battery:
+        info_lines.append(f"Batarya:   {battery}")
+    if display:
+        info_lines.append(f"Display:   {display}")
 
     logo_lines = LOGO.strip("\n").splitlines()
     max_lines = max(len(logo_lines), len(info_lines))
-
     for i in range(max_lines):
         left = logo_lines[i] if i < len(logo_lines) else ""
         right = info_lines[i] if i < len(info_lines) else ""

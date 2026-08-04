@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Sanal ortamlar
+venv/
+env/
+.venv/
+ENV/
+
+# Paket / derleme dosyaları
+*.egg-info/
+dist/
+build/
+
+# Editör / IDE
+.vscode/
+.idea/
+*.swp
+
+# İşletim sistemi dosyaları
+.DS_Store
+Thumbs.db
+
+# Log ve geçici dosyalar
+*.log
+*.tmp
+
+# Ortam değişkenleri / gizli bilgiler
+.env
