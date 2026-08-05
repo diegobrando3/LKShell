@@ -8,7 +8,11 @@ User = "Test"
 Passwd= 333
 while True:
     ask1=input("User: ")
-    if ask1==User:
+    if ask1=="exit":
+        break
+    elif ask1=="quit":
+        break
+    elif ask1==User:
         while True:
             try:
                 ask2=int(input("Password: "))
@@ -69,6 +73,7 @@ def cmd_mkdir(args):
         return
     try:
         os.makedirs(args[0])
+        print("ok")
     except FileExistsError:
         print(f"mkdir: dizin zaten var: {args[0]}")
 
@@ -97,6 +102,11 @@ def helpme(args):
     print("'opsec' üst seviye güvenlik açar")
     print("'lks' fastfetch")
     print("'update' LKShell'i günceller (Yeniden başlatmanız gerekir!)")
+    print("'yarat' seçili dizine klasör oluşturur")
+    print("'sil' seçili dizini siler")
+    print("'neredeyim' olduğun dizini gösterir")
+    print("'varmi' seçili dizinin var olduğunu kontrol eder")
+    print("'gir' seçilen dizine girer")
 
 def fetch(args):
     fastfetch(args)

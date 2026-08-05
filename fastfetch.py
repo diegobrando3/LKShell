@@ -10,7 +10,6 @@ SHELL_VERSION = "LKShell v0.2"  # elle güncelle
 def get_kernel():
     return platform.release()  # zaten OS satırında var ama ayrı satır istersen bu
 
-
 def get_hostname():
     return socket.gethostname()
 
