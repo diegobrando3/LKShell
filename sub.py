@@ -1,17 +1,23 @@
 import os
 import sys
+import subprocess
 from fastfetch import fastfetch
 from update import update
 
+setautoallowbash=False
+############################################################################################################
+##################################### GİRİŞ EKRANI #########################################################
+############################################################################################################
 print("Lütfen LKShell'i tam ekranda kullanın!")
+print("Çıkmak için: exit, quit")
 User = "Test"
 Passwd= 333
 while True:
     ask1=input("User: ")
     if ask1=="exit":
-        break
+        exit()
     elif ask1=="quit":
-        break
+        exit()
     elif ask1==User:
         while True:
             try:
@@ -26,12 +32,61 @@ while True:
         break
     else:
         print(f"kullanıcı bulunamadı: {ask1}")
+
+#########BASIC##############
 def cmd_echo(args):
     print(" ".join(args))
 def benkimim(args):
     print(User)
 def sudoopsec(args):
     print("Mr. Robot sudo opsec haha")
+############################
+
+############################################################################################################
+####################################BASH DENEME#############################################################
+############################################################################################################
+
+def autoallow_on(args):
+    global setautoallowbash
+    if setautoallowbash==True:
+        print("Otomatik bash zaten açık.")
+    else:
+        setautoallowbash=True
+        print("Otomatik bash açıldı")
+
+def autoallow_off(args):
+    global setautoallowbash
+    if setautoallowbash==False:
+        print("Otomatik bash zaten kapalı.")
+    else:
+        setautoallowbash=False
+        print("Otomatik bash kapatıldı.")
+
+def bashdene(cmd, args, parts):
+    global setautoallowbash
+    if setautoallowbash == False:
+        answer = input(f"Bu komut LKShell üzerinde bulunamadı: {cmd} \nBash üzerinden göreve devam edilsin mi? (y/n): ")
+        if answer.lower() == "y":
+            try:
+                subprocess.run(parts)
+            except FileNotFoundError:
+                print(f"bash: bilinmeyen komut: {cmd}")
+            except Exception as e:
+                print(f"Hata: {e}")
+        else:
+            print(f"lks: bilinmeyen komut: {cmd}")
+    else:
+        # otomatik açıksa sormadan direkt çalıştır
+        try:
+            subprocess.run(parts)
+        except FileNotFoundError:
+            print(f"bash: komut bulunamadı: {cmd}")
+        except Exception as e:
+            print(f"Hata: {e}")
+
+############################################################################################################
+####################################DOSYALAR################################################################
+############################################################################################################
 global path
 path=os.path.expanduser("~")
 def cmd_gir(args):
@@ -41,7 +96,6 @@ def cmd_gir(args):
     else:
         path=args[0]
         UserPath= print(f"{path}")
-
     try:
         os.chdir(path)
     except FileNotFoundError:
@@ -50,8 +104,10 @@ def cmd_gir(args):
         print(f"gir: bir dizin değil: {path}")
     except PermissionError:
         print(f"gir: izin reddedildi: {path}")
+
 def cmd_neredeyim(args):
     print(os.getcwd)
+
 def cmd_ls(args):
     target=args[0] if args else "."
     try:
@@ -93,7 +149,7 @@ def cmd_rm(args):
         print(f"sil: bulunamadı {target}")
     except OSError:
         print(f"sil: klasör boş değil, silinemedi {target}")
-
+############################################################################################################
 
 def helpme(args):
     print("'say' kendisinden sonra yazılan yazıyı tekrarlar")
@@ -107,11 +163,14 @@ def helpme(args):
     print("'neredeyim' olduğun dizini gösterir")
     print("'varmi' seçili dizinin var olduğunu kontrol eder")
     print("'gir' seçilen dizine girer")
-
+    print("'otobash1' LKShell üzerinde bilinmeyen komudu bash'e otomatik yönlendirir (y/n sorusunu atlar)")
+    print("'otobash0' LKShell üzerinde bilinmeyen komudu bash'e otomatik yönlendirmeyi kapatır(y/n sorusu sorar)[DEFAULT]")
 def fetch(args):
     fastfetch(args)
 
-#neofetch ekle
+############################################################################################################
+##################################### DICTIONARY ###########################################################
+############################################################################################################
 SOZLUK = {
     "say": cmd_echo,
     "whoami": benkimim,
@@ -124,17 +183,21 @@ SOZLUK = {
     "neredeyim": cmd_neredeyim,
     "varmi": cmd_ls,
     "gir": cmd_gir,
+    "otobash1": autoallow_on,
+    "otobash0": autoallow_off,
 }
 print("Yardım için 'help'")
-
-
-
+############################################################################################################
+############################################################################################################
+##################################### MAIN LOOP ############################################################
+############################################################################################################
 while True:
     UserInput = input(">>$ ")
 
-    if UserInput == "exit":
-        break
-
+    if UserInput.lower() == "exit":
+        exit()
+    if UserInput.lower()=="quit":
+        exit()
     parts = UserInput.split()
     if not parts:
         continue
@@ -145,4 +208,4 @@ while True:
     if cmd in SOZLUK:
         SOZLUK[cmd](args)
     else:
-        print(f"komut bulunamadı: {cmd}")
+        bashdene(cmd, args, parts)
