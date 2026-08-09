@@ -1,4 +1,4 @@
-## LKShell v0.2
+## LKShell v0.3
 
 Kendi Python tabanlı, Bash'ten ilham alan hafif ve genişletilebilir bir terminal/shell projesi. Sıfırdan kendi kurallarımla, terminal mantığını ve komut satırı araçlarının nasıl çalıştığını anlamak amacıyla geliştiriyorum :))
 
@@ -21,6 +21,7 @@ Kendi Python tabanlı, Bash'ten ilham alan hafif ve genişletilebilir bir termin
   * `yarat <dizin>` — Yeni bir klasör oluşturur (`mkdir` işlevi).
   * `sil <dosya/dizin>` — Belirtilen dosya veya boş klasörü siler (`rm` işlevi).
   * `exit` / `quit` — Shell'den güvenli çıkış yapar.
+  * `otobash0` / `otobash1` — LKShell'de olmayan komutları otomatik olarak (izin istemeden) Bash'e yönlendirir.
 
 ---
 
@@ -116,7 +117,7 @@ pip install psutil --break-system-packages
 ### Yol Haritası (Roadmap)
 
 * [x] Temel dosya yönetimi komutları (`gir`, `neredeyim`, `varmi`, `yarat`, `sil`)
-* [ ] Tanınmayan komutları sistemin kendi shell'ine (Bash/Zsh) yönlendirme
+* [x] Tanınmayan komutları sistemin kendi shell'ine (Bash/Zsh) yönlendirme
 * [ ] Komut geçmişi (`history` ve ok tuşları desteği)
-* [ ] Daha güvenli giriş ekranı (şifreyi yıldızlama / gizleme)
+* [ ] Daha güvenli giriş ekranı (hesap açma muhtmelen json ile! şifreyi yıldızlama / gizleme)
 * [ ] `fastfetch` çıktısı için renkli (ANSI) terminal desteği
