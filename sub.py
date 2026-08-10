@@ -149,6 +149,7 @@ def cmd_rm(args):
         print(f"sil: bulunamadı {target}")
     except OSError:
         print(f"sil: klasör boş değil, silinemedi {target}")
+
 ############################################################################################################
 
 def helpme(args):
@@ -165,12 +166,20 @@ def helpme(args):
     print("'gir' seçilen dizine girer")
     print("'otobash1' LKShell üzerinde bilinmeyen komudu bash'e otomatik yönlendirir (y/n sorusunu atlar)")
     print("'otobash0' LKShell üzerinde bilinmeyen komudu bash'e otomatik yönlendirmeyi kapatır(y/n sorusu sorar)[DEFAULT]")
+
 def fetch(args):
     fastfetch(args)
 
 ############################################################################################################
 ##################################### DICTIONARY ###########################################################
 ############################################################################################################
+
+def cmd_history(args):
+    for i, komut in enumerate(HISTORY, 1):
+        print(f"{i} {komut}")
+
+HISTORY=[]
+
 SOZLUK = {
     "say": cmd_echo,
     "whoami": benkimim,
@@ -185,18 +194,21 @@ SOZLUK = {
     "gir": cmd_gir,
     "otobash1": autoallow_on,
     "otobash0": autoallow_off,
+    "history": cmd_history,
 }
 print("Yardım için 'help'")
-############################################################################################################
+
 ############################################################################################################
 ##################################### MAIN LOOP ############################################################
 ############################################################################################################
+
 while True:
     UserInput = input(">>$ ")
-
+    if UserInput.strip() and UserInput!="history": 
+        HISTORY.append(UserInput)
     if UserInput.lower() == "exit":
         exit()
-    if UserInput.lower()=="quit":
+    elif UserInput.lower()=="quit":
         exit()
     parts = UserInput.split()
     if not parts:
