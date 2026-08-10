@@ -166,6 +166,7 @@ def helpme(args):
     print("'gir' seçilen dizine girer")
     print("'otobash1' LKShell üzerinde bilinmeyen komudu bash'e otomatik yönlendirir (y/n sorusunu atlar)")
     print("'otobash0' LKShell üzerinde bilinmeyen komudu bash'e otomatik yönlendirmeyi kapatır(y/n sorusu sorar)[DEFAULT]")
+    print("'history' önceki girilen kodları yazar")
 
 def fetch(args):
     fastfetch(args)
