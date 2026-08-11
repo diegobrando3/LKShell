@@ -105,8 +105,11 @@ def get_cpu():
 
 def get_gpu():
     system = platform.system()
-    try:
-        if system == "Linux":
+    gpu_name = "Bilinmiyor"
+    usage_info = None
+
+    if system == "Linux":
+        try:
             out = subprocess.check_output(["lspci"], text=True)
             gpus = [
                 line.split(": ", 1)[1]
@@ -114,24 +117,72 @@ def get_gpu():
                 if "VGA" in line or "3D controller" in line
             ]
             if gpus:
-                return ", ".join(gpus)
-        elif system == "Windows":
+                gpu_name = ", ".join(gpus)
+        except Exception:
+            pass
+
+        # Önce nvidia-smi'nin var olup olmadığını doğrudan dene (isim eşleşmesine güvenme)
+        usage_info = get_nvidia_usage()
+        if not usage_info:
+            usage_info = get_amd_usage()
+
+    elif system == "Windows":
+        try:
             out = subprocess.check_output(
                 ["wmic", "path", "win32_VideoController", "get", "name"], text=True
             )
             lines = [l.strip() for l in out.splitlines() if l.strip() and l.strip() != "Name"]
             if lines:
-                return ", ".join(lines)
-        elif system == "Darwin":
+                gpu_name = ", ".join(lines)
+        except Exception:
+            pass
+
+    elif system == "Darwin":
+        try:
             out = subprocess.check_output(
                 ["system_profiler", "SPDisplaysDataType"], text=True
             )
             for line in out.splitlines():
                 if "Chipset Model" in line:
-                    return line.split(":", 1)[1].strip()
+                    gpu_name = line.split(":", 1)[1].strip()
+                    break
+        except Exception:
+            pass
+
+    if usage_info:
+        return f"{gpu_name} ({usage_info})"
+    return gpu_name
+
+
+def get_nvidia_usage():
+    try:
+        out = subprocess.check_output(
+            ["nvidia-smi", "--query-gpu=utilization.gpu,memory.used,memory.total",
+             "--format=csv,noheader,nounits"],
+            text=True,
+            stderr=subprocess.DEVNULL,
+        )
+        util, mem_used, mem_total = out.strip().split(", ")
+        return f"%{util} kullanım, {mem_used}MB/{mem_total}MB VRAM"
+    except (FileNotFoundError, subprocess.CalledProcessError, ValueError):
+        return None
     except Exception:
-        pass
-    return "Bilinmiyor"
+        return None
+
+
+def get_amd_usage():
+    # Farklı sistemlerde kart index'i card0 olmayabilir, ilk 4'ü dene
+    for i in range(4):
+        path = f"/sys/class/drm/card{i}/device/gpu_busy_percent"
+        try:
+            with open(path) as f:
+                percent = f.read().strip()
+            return f"%{percent} kullanım"
+        except FileNotFoundError:
+            continue
+        except Exception:
+            continue
+    return None
 
 
 def get_memory():
