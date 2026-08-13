@@ -5,7 +5,7 @@ from datetime import timedelta
 import psutil
 import socket
 
-SHELL_VERSION = "LKShell v0.2"  # elle güncelle
+SHELL_VERSION = "LKShell v0.3.5"  # elle güncelle
 
 def get_kernel():
     return platform.release()  # zaten OS satırında var ama ayrı satır istersen bu
@@ -224,7 +224,7 @@ def get_display():
             out = subprocess.check_output(
                 ["system_profiler", "SPDisplaysDataType"], text=True
             )
-            return out  # ham çıktı, isteğe göre parse edilebilir
+            return out  # raw çıktı, isteğe göre parse edilebilir
     except Exception:
         pass
     return None

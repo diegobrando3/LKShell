@@ -1,6 +1,7 @@
 import os
 import sys
 import subprocess
+from crusr import login_flow
 from fastfetch import fastfetch
 from update import update
 
@@ -13,29 +14,8 @@ setautoallowbash=False
 print("Lütfen LKShell'i tam ekranda kullanın!")
 print("Çıkmak için: exit, quit")
 
-User = "Test"
-Passwd= 333
-
-while True:
-    ask1=input("User: ")
-    if ask1=="exit":
-        exit()
-    elif ask1=="quit":
-        exit()
-    elif ask1==User:
-        while True:
-            try:
-                ask2=int(input("Password: "))
-                if ask2==Passwd:
-                    break
-                else:
-                    print("şifre eşleşmedi")
-            except:
-                print("şifre eşleşmedi")
-                continue
-        break
-    else:
-        print(f"kullanıcı bulunamadı: {ask1}")
+current_user=login_flow()
+User=current_user
 
 #########BASIC##############
 def cmd_echo(args):
