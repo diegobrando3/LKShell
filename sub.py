@@ -1,11 +1,14 @@
 import os
 import sys
 import subprocess
+from listing import todo
+from reminder import hatirlat
+from bul import bul
 from crusr import login_flow
 from fastfetch import fastfetch
 from update import update
 
-setautoallowbash=False
+setautoallowbash=True
 
 ############################################################################################################
 ##################################### GİRİŞ EKRANI #########################################################
@@ -182,6 +185,9 @@ SOZLUK = {
     "otobash1": autoallow_on,
     "otobash0": autoallow_off,
     "history": cmd_history,
+    "bul": bul,
+    "hatirlat": hatirlat,
+    "todo": todo,
 }
 
 print("Yardım için 'help'")
