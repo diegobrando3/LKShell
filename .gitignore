@@ -31,3 +31,4 @@ Thumbs.db
 # Ortam değişkenleri / gizli bilgiler
 .env
 accounts.json
+todo.json

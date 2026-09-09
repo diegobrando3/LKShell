@@ -156,6 +156,8 @@ def helpme(args):
     print("'otobash1' LKShell üzerinde bilinmeyen komudu bash'e otomatik yönlendirir (y/n sorusunu atlar)")
     print("'otobash0' LKShell üzerinde bilinmeyen komudu bash'e otomatik yönlendirmeyi kapatır(y/n sorusu sorar)[DEFAULT]")
     print("'history' önceki girilen kodları yazar")
+    print("'hatirlat' ile hatırlatma amacıyla bir bildiri oluşturursunuz")
+    print("'todo' ile görev oluşturabilirsiniz; json olarak kaydedilir")
 
 def fetch(args):
     fastfetch(args)
