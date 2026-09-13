@@ -23,7 +23,8 @@ Kendi Python tabanlı, Bash'ten ilham alan hafif ve genişletilebilir bir termin
   * `exit` / `quit` — Shell'den güvenli çıkış yapar.
   * `otobash0` / `otobash1` — LKShell'de olmayan komutları otomatik olarak (izin istemeden) Bash'e yönlendirir.
   * `history` — LKShell üzerinde yazılan girişlerin logları.
-
+  * `hatirlat` – Terminalde küçük bir uyarıcı(örn: hatirlat 30dk)
+  * `todo` – Görev ekleme(örn:todo saat 7 spor)
 ---
 
 ### Kurulum
@@ -95,7 +96,7 @@ def selam(args):
     print("Selam! Bu benim özel komutum.")
 
 # Sözlüğe ekleme:
-SOZLUK["selam"] = selam
+SOZLUK["selam":selam] = selam
 ```
 
 > **İpucu:** Tüm komut fonksiyonları, argümanları işlemeseler dahi zorunlu olarak `args` parametresini almalıdır; çünkü tüm komutlar `SOZLUK[cmd](args)` mantığıyla aynı arayüz üzerinden çağrılır.
@@ -119,6 +120,6 @@ pip install psutil --break-system-packages
 
 * [x] Temel dosya yönetimi komutları (`gir`, `neredeyim`, `varmi`, `yarat`, `sil`)
 * [x] Tanınmayan komutları sistemin kendi shell'ine (Bash/Zsh) yönlendirme
-* [ ] Komut geçmişi (`history` ve ok tuşları desteği)
-* [ ] Daha güvenli giriş ekranı (hesap açma muhtmelen json ile! şifreyi yıldızlama / gizleme)
-* [ ] `fastfetch` çıktısı için renkli (ANSI) terminal desteği
+* [x] Komut geçmişi (`history` ve ok tuşları desteği)
+* [\] Daha güvenli giriş ekranı (hesap açma muhtmelen json ile! şifreyi yıldızlama / gizleme)
+* [\] `fastfetch` çıktısı için renkli (ANSI) terminal desteği
